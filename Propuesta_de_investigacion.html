@@ -1,0 +1,417 @@
+
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>¿Qué tan cuántica es la nube?</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: una columna de lectura (~68ch) con figuras a ancho completo; ámbar = clásico, verde azulado = cuántico, rojo = imposible */
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --fg:#16202B; --muted:#56636F; --line:#D5DCE3;
+  --quantum:#0B7A83; --quantum-soft:#D9EFF0; --classic:#B4690E; --classic-soft:#F6E7D2;
+  --impossible:#B8323A; --impossible-soft:#F5DADB; --ink2:#2B3946;
+  --display:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  --body:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0F151B; --surface:#17202A; --fg:#E4EAF0; --muted:#98A6B3; --line:#2A3643;
+  --quantum:#4CC3CB; --quantum-soft:#12343A; --classic:#E3A253; --classic-soft:#3A2A15;
+  --impossible:#EE747B; --impossible-soft:#3D1D21; --ink2:#C9D3DC; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0F151B; --surface:#17202A; --fg:#E4EAF0; --muted:#98A6B3; --line:#2A3643;
+  --quantum:#4CC3CB; --quantum-soft:#12343A; --classic:#E3A253; --classic-soft:#3A2A15;
+  --impossible:#EE747B; --impossible-soft:#3D1D21; --ink2:#C9D3DC; color-scheme:dark }
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16.5px;line-height:1.65;margin:0}
+.wrap{max-width:860px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(30px,6vw,48px);letter-spacing:-.02em}
+h2{font-size:clamp(23px,3.6vw,30px);margin-top:8px}
+h3{font-size:19px}
+p{margin:0}
+.prose{max-width:68ch;display:flex;flex-direction:column;gap:14px}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--quantum)}
+.lede{font-size:19px;color:var(--ink2);max-width:62ch}
+section{display:flex;flex-direction:column;gap:18px;padding-block:44px;border-top:1px solid var(--line)}
+header{display:flex;flex-direction:column;gap:16px;padding-bottom:36px}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px}
+nav.toc a{font-size:14px;color:var(--fg);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--surface)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--quantum);color:var(--quantum);outline:none}
+.m{font-family:var(--mono);font-size:.92em;white-space:nowrap}
+.q{color:var(--quantum);font-weight:600}.c{color:var(--classic);font-weight:600}.x{color:var(--impossible);font-weight:600}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px}
+figure .scroll{overflow-x:auto}
+figcaption{font-size:14px;color:var(--muted);max-width:70ch}
+svg text{font-family:var(--body)}
+.callout{border-left:3px solid var(--quantum);padding:4px 0 4px 16px;color:var(--ink2);max-width:66ch}
+.metaphor{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card .say{font-family:var(--display);font-weight:600;font-size:17px}
+.card .means{font-size:14.5px;color:var(--ink2)}
+.card .tag{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.qs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.qs .card b{font-family:var(--mono);color:var(--quantum)}
+.exp{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.exp .row{display:grid;grid-template-columns:64px 1fr;gap:14px;padding:14px 16px;border-top:1px solid var(--line)}
+.exp .row:first-child{border-top:0}
+.exp .id{font-family:var(--mono);font-weight:600;color:var(--quantum);font-size:15px}
+.exp .row div{min-width:0}
+.exp .row p{font-size:15px;color:var(--ink2)}
+dl.gloss{display:grid;grid-template-columns:minmax(150px,220px) 1fr;gap:0;margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+dl.gloss dt,dl.gloss dd{padding:12px 16px;border-top:1px solid var(--line);margin:0}
+dl.gloss dt{font-weight:600;font-family:var(--display)}
+dl.gloss dt .m{font-weight:600;color:var(--quantum)}
+dl.gloss dd{font-size:15px;color:var(--ink2);min-width:0}
+dl.gloss .grp{grid-column:1/-1;background:var(--bg);font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:10px 16px;border-top:1px solid var(--line)}
+dl.gloss .grp:first-child{border-top:0}
+@media (max-width:560px){ dl.gloss{grid-template-columns:1fr} dl.gloss dd{border-top:0;padding-top:0} .exp .row{grid-template-columns:1fr;gap:4px} }
+.ctrl{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;font-size:14.5px}
+.ctrl label{display:flex;align-items:center;gap:10px}
+input[type=range]{accent-color:var(--quantum);width:200px;max-width:60vw}
+.readout{font-family:var(--mono);font-size:15px;padding:4px 10px;border-radius:6px}
+.readout.ok{background:var(--quantum-soft);color:var(--quantum)}
+.readout.no{background:var(--classic-soft);color:var(--classic)}
+.hyp{display:flex;flex-direction:column;gap:12px}
+.hyp .card{flex-direction:row;gap:14px;align-items:baseline}
+.hyp .card b{font-family:var(--mono);color:var(--quantum);flex:none}
+table.t{border-collapse:collapse;font-size:14.5px;font-variant-numeric:tabular-nums;min-width:420px}
+table.t th,table.t td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:right}
+table.t th:first-child,table.t td:first-child{text-align:left}
+table.t th{font-family:var(--display);font-weight:600}
+footer{padding-top:30px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Propuesta · Paper del Mes · IEEE CS PUCP</span>
+  <h1>¿Qué tan cuántica es la nube?</h1>
+  <p class="lede">Una guía visual de la propuesta: qué es el test de Bell, qué queremos averiguar en las computadoras cuánticas de IBM, cómo lo vamos a medir y qué esperamos encontrar. Al final hay un glosario con cada término, cada variable y lo que significan las metáforas.</p>
+  <nav class="toc" aria-label="Contenido">
+    <a href="#tema">1 · El tema</a><a href="#numero-s">2 · El número S</a><a href="#buscamos">3 · Qué buscamos</a><a href="#como">4 · Cómo lo haremos</a><a href="#esperamos">5 · Qué esperamos</a><a href="#metaforas">6 · Metáforas</a><a href="#glosario">7 · Glosario</a>
+  </nav>
+</header>
+
+<!-- 1 TEMA -->
+<section id="tema">
+  <span class="eyebrow">1 · El tema</span>
+  <h2>Un juego de dos jugadores que la física clásica no puede ganar</h2>
+  <div class="prose">
+    <p>Imagina una fuente que crea dos partículas y le manda una a <b>Alicia</b> y otra a <b>Bob</b>, que están lejos. Cada uno tiene una perilla con dos posiciones (Alicia: <span class="m">a</span> o <span class="m">a′</span>; Bob: <span class="m">b</span> o <span class="m">b′</span>). Eligen una posición al azar, miden, y el aparato les responde <span class="m">+1</span> o <span class="m">−1</span>. Después de miles de rondas comparan sus anotaciones y ven qué tan seguido coincidieron.</p>
+    <p>Si el mundo funcionara <span class="c">“a la clásica”</span>, es decir, si cada partícula saliera de la fuente con sus respuestas ya escritas (como una tarjeta con instrucciones) y nada pudiera viajar más rápido que la luz para avisarle a la otra qué perilla se eligió, entonces hay un tope matemático para cuánto pueden coincidir. Eso lo demostró John Bell en 1964.</p>
+  </div>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 760 250" width="100%" style="min-width:560px" role="img" aria-label="Fuente en el centro envía una partícula a Alicia a la izquierda y otra a Bob a la derecha; cada uno elige una perilla y obtiene más uno o menos uno">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--quantum)"/></marker></defs>
+      <!-- source -->
+      <circle cx="380" cy="120" r="46" fill="var(--quantum-soft)" stroke="var(--quantum)" stroke-width="2"/>
+      <text x="380" y="116" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">Fuente</text>
+      <text x="380" y="133" text-anchor="middle" font-size="11" fill="var(--muted)">par entrelazado</text>
+      <!-- wavy links -->
+      <path d="M334,120 C320,100 300,140 270,120 S220,100 196,120" fill="none" stroke="var(--quantum)" stroke-width="2" marker-end="url(#ar)"/>
+      <path d="M426,120 C440,100 460,140 490,120 S540,100 564,120" fill="none" stroke="var(--quantum)" stroke-width="2" marker-end="url(#ar)"/>
+      <text x="380" y="196" text-anchor="middle" font-size="12.5" fill="var(--muted)">en la nube: dos qubits del mismo chip</text>
+      <!-- Alice -->
+      <rect x="40" y="70" width="150" height="100" rx="10" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
+      <text x="115" y="96" text-anchor="middle" font-size="15" font-weight="600" fill="var(--fg)">Alicia</text>
+      <text x="115" y="120" text-anchor="middle" font-size="13" fill="var(--ink2)">perilla: a  o  a′</text>
+      <text x="115" y="150" text-anchor="middle" font-size="13" font-family="var(--mono)" fill="var(--quantum)">resultado ±1</text>
+      <!-- Bob -->
+      <rect x="570" y="70" width="150" height="100" rx="10" fill="var(--surface)" stroke="var(--line)" stroke-width="1.5"/>
+      <text x="645" y="96" text-anchor="middle" font-size="15" font-weight="600" fill="var(--fg)">Bob</text>
+      <text x="645" y="120" text-anchor="middle" font-size="13" fill="var(--ink2)">perilla: b  o  b′</text>
+      <text x="645" y="150" text-anchor="middle" font-size="13" font-family="var(--mono)" fill="var(--quantum)">resultado ±1</text>
+      <!-- compare -->
+      <path d="M115,175 L115,222 L645,222 L645,175" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <rect x="290" y="208" width="180" height="28" rx="14" fill="var(--bg)" stroke="var(--line)"/>
+      <text x="380" y="227" text-anchor="middle" font-size="13" fill="var(--fg)">comparan → calculan S</text>
+    </svg>
+    </div>
+    <figcaption>El experimento de Bell en su forma de “juego”. En nuestro proyecto, Alicia y Bob no están en dos laboratorios: son dos qubits de un procesador de IBM, y “girar la perilla” es aplicar una rotación antes de medir.</figcaption>
+  </figure>
+  <div class="prose">
+    <p>La mecánica cuántica dice que, con partículas <span class="q">entrelazadas</span>, ese tope se puede romper. Los experimentos de Aspect (1982), Hensen (2015) y otros lo confirmaron, y por eso se dio el Nobel de Física 2022. Hoy cualquiera puede repetir el juego gratis en las computadoras cuánticas de IBM por internet.</p>
+    <p class="callout">Nuestro tema no es volver a probar que la naturaleza es cuántica; eso ya está probado. Es usar el test de Bell como un <b>instrumento de medida</b>: qué tan bien conserva el entrelazamiento una computadora cuántica pública, cuánto le dura y si se comporta igual de un día a otro.</p>
+  </div>
+</section>
+
+<!-- 2 NUMERO S -->
+<section id="numero-s">
+  <span class="eyebrow">2 · La variable central</span>
+  <h2>El número S: la regla de tres zonas</h2>
+  <div class="prose">
+    <p>De las cuatro combinaciones de perillas se calculan cuatro correlaciones <span class="m">E</span> y se combinan en un solo número (la fórmula CHSH):</p>
+    <p class="m" style="font-size:17px;white-space:normal">S = E(a,b) + E(a,b′) + E(a′,b) − E(a′,b′)</p>
+    <p>Cada <span class="m">E</span> va de −1 (siempre salen opuestos) a +1 (siempre coinciden). Lo importante es dónde cae <span class="m">|S|</span>:</p>
+  </div>
+  <figure>
+    <div class="scroll"><svg id="scale" viewBox="0 0 760 175" width="100%" style="min-width:520px" role="img" aria-label="Recta de 0 a 4: hasta 2 zona clásica, de 2 a 2.83 zona cuántica, más de 2.83 imposible"></svg></div>
+    <figcaption>Hasta <b class="c">2</b> lo puede explicar cualquier teoría “a la clásica” (realismo local). Entre 2 y <b class="q">2√2 ≈ 2,83</b> solo lo explica el entrelazamiento cuántico. Por encima de 2,83 no lo permite ni la mecánica cuántica (límite de Tsirelson); llegar a 4 exigiría mandar señales instantáneas.</figcaption>
+  </figure>
+  <div class="prose">
+    <p>Una computadora cuántica <i>perfecta</i> daría S = 2,83. Una real da menos, porque el ruido “diluye” el entrelazamiento. Si el ruido es grande, S cae por debajo de 2 y el chip ya no se distingue de un sistema clásico. Por eso S funciona como un <b>termómetro de cuanticidad</b>.</p>
+  </div>
+</section>
+
+<!-- 3 BUSCAMOS -->
+<section id="buscamos">
+  <span class="eyebrow">3 · Qué buscamos</span>
+  <h2>Cuatro preguntas de investigación</h2>
+  <div class="qs">
+    <div class="card"><b>PI1 · ¿Cuánto?</b><p>¿Qué tan cerca de 2,83 llega S en el hardware real, y cambia según qué par de qubits del chip uses?</p><span class="tag">→ un “mapa” del chip</span></div>
+    <div class="card"><b>PI2 · ¿Cuánto dura?</b><p>Si esperamos un tiempo antes de medir, ¿cómo baja S? ¿Cuándo cruza el 2 y el chip “se vuelve clásico”?</p><span class="tag">→ decoherencia, tiempo T₂</span></div>
+    <div class="card"><b>PI3 · ¿Cuántos?</b><p>Con 3, 4, 5… qubits (estados GHZ y desigualdad de Mermin), ¿hasta cuántos se mantiene la violación?</p><span class="tag">→ escala del entrelazamiento</span></div>
+    <div class="card"><b>PI4 · ¿Siempre igual?</b><p>Si repetimos el mismo experimento en días distintos, ¿sale lo mismo o el hardware “deriva”?</p><span class="tag">→ reproducibilidad</span></div>
+  </div>
+</section>
+
+<!-- 4 COMO -->
+<section id="como">
+  <span class="eyebrow">4 · Cómo lo haremos</span>
+  <h2>Del circuito al número S</h2>
+  <div class="prose">
+    <p>Todo se programa en Python con <b>Qiskit</b> y se envía a los procesadores de <b>IBM Quantum</b>. Cada experimento es un circuito pequeño que se repite miles de veces (<span class="m">N</span> “shots”), porque cada medición individual es aleatoria y solo el promedio tiene sentido.</p>
+  </div>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 760 200" width="100%" style="min-width:600px" role="img" aria-label="Circuito: qubit 0 pasa por Hadamard, control de CNOT, rotación de Alicia y medición; qubit 1 pasa por el destino del CNOT, rotación de Bob y medición">
+      <text x="20" y="64" font-size="14" font-family="var(--mono)" fill="var(--fg)">q₀ |0⟩</text>
+      <text x="20" y="144" font-size="14" font-family="var(--mono)" fill="var(--fg)">q₁ |0⟩</text>
+      <line x1="80" y1="60" x2="700" y2="60" stroke="var(--muted)" stroke-width="1.5"/>
+      <line x1="80" y1="140" x2="700" y2="140" stroke="var(--muted)" stroke-width="1.5"/>
+      <!-- stage bands -->
+      <rect x="110" y="20" width="200" height="160" rx="8" fill="var(--quantum-soft)" opacity=".55"/>
+      <rect x="340" y="20" width="200" height="160" rx="8" fill="var(--classic-soft)" opacity=".55"/>
+      <rect x="565" y="20" width="120" height="160" rx="8" fill="var(--bg)" stroke="var(--line)"/>
+      <text x="210" y="196" text-anchor="middle" font-size="12.5" fill="var(--muted)">1 · crear el par entrelazado</text>
+      <text x="440" y="196" text-anchor="middle" font-size="12.5" fill="var(--muted)">2 · girar la “perilla”</text>
+      <text x="625" y="196" text-anchor="middle" font-size="12.5" fill="var(--muted)">3 · medir</text>
+      <!-- H -->
+      <rect x="135" y="42" width="40" height="36" rx="4" fill="var(--surface)" stroke="var(--quantum)" stroke-width="2"/>
+      <text x="155" y="66" text-anchor="middle" font-size="16" font-weight="600" fill="var(--quantum)">H</text>
+      <!-- CNOT -->
+      <line x1="250" y1="60" x2="250" y2="140" stroke="var(--quantum)" stroke-width="2"/>
+      <circle cx="250" cy="60" r="6" fill="var(--quantum)"/>
+      <circle cx="250" cy="140" r="13" fill="var(--surface)" stroke="var(--quantum)" stroke-width="2"/>
+      <line x1="237" y1="140" x2="263" y2="140" stroke="var(--quantum)" stroke-width="2"/><line x1="250" y1="127" x2="250" y2="153" stroke="var(--quantum)" stroke-width="2"/>
+      <!-- Ry -->
+      <rect x="385" y="42" width="110" height="36" rx="4" fill="var(--surface)" stroke="var(--classic)" stroke-width="2"/>
+      <text x="440" y="66" text-anchor="middle" font-size="14" font-family="var(--mono)" fill="var(--classic)">Ry(−θ_A)</text>
+      <rect x="385" y="122" width="110" height="36" rx="4" fill="var(--surface)" stroke="var(--classic)" stroke-width="2"/>
+      <text x="440" y="146" text-anchor="middle" font-size="14" font-family="var(--mono)" fill="var(--classic)">Ry(−θ_B)</text>
+      <!-- meters -->
+      <g fill="var(--surface)" stroke="var(--fg)" stroke-width="1.6">
+        <rect x="605" y="42" width="40" height="36" rx="4"/><rect x="605" y="122" width="40" height="36" rx="4"/>
+      </g>
+      <path d="M612,70 A13,13 0 0 1 638,70" fill="none" stroke="var(--fg)" stroke-width="1.6"/><line x1="625" y1="70" x2="636" y2="52" stroke="var(--fg)" stroke-width="1.6"/>
+      <path d="M612,150 A13,13 0 0 1 638,150" fill="none" stroke="var(--fg)" stroke-width="1.6"/><line x1="625" y1="150" x2="636" y2="132" stroke="var(--fg)" stroke-width="1.6"/>
+      <text x="715" y="64" font-size="13" font-family="var(--mono)" fill="var(--fg)">0/1</text>
+      <text x="715" y="144" font-size="13" font-family="var(--mono)" fill="var(--fg)">0/1</text>
+    </svg>
+    </div>
+    <figcaption><b>H</b> (Hadamard) pone el primer qubit “mitad 0, mitad 1”; la <b>CNOT</b> copia esa indecisión al segundo y los deja entrelazados en el estado <span class="m">|Φ⁺⟩ = (|00⟩+|11⟩)/√2</span>. Luego cada qubit se gira un ángulo θ (esa es la “perilla”) y se mide. Con los conteos de 00, 01, 10 y 11 se calcula <span class="m">E = (N₀₀+N₁₁−N₀₁−N₁₀)/N</span>.</figcaption>
+  </figure>
+
+  <h3>Los seis experimentos</h3>
+  <div class="exp">
+    <div class="row"><span class="id">E0</span><div><b>Ensayo en simulador.</b><p>Correr todo en una computadora clásica que imita una cuántica: primero sin ruido (debe dar 2,83) y luego con el modelo de ruido del chip. Sirve para verificar que el código está bien antes de gastar tiempo real.</p></div></div>
+    <div class="row"><span class="id">E1</span><div><b>Mapa del chip.</b><p>Medir S en 5 a 10 pares de qubits vecinos. Resultado: qué pares “son más cuánticos” y si eso coincide con los errores que IBM publica. Responde PI1.</p></div></div>
+    <div class="row"><span class="id">E2</span><div><b>Barrido de ángulo.</b><p>Girar la perilla de Bob de 0 a 2π y medir E en cada paso. La teoría dice que debe salir una curva coseno; el ruido la “aplasta”. Responde PI1.</p></div></div>
+    <div class="row"><span class="id">E3</span><div><b>Tiempo de espera.</b><p>Crear el par, esperar de 0 a 100 µs sin hacer nada y recién medir. Se espera que S baje como una exponencial. Responde PI2.</p></div></div>
+    <div class="row"><span class="id">E4</span><div><b>Muchos qubits.</b><p>Entrelazar 3, 4, 5… qubits (estado GHZ) y evaluar la desigualdad de Mermin. Responde PI3.</p></div></div>
+    <div class="row"><span class="id">E5</span><div><b>Reproducibilidad.</b><p>Repetir E1 en al menos tres días distintos, alternando circuitos, y revisar que no haya “señalización” aparente. Responde PI4.</p></div></div>
+  </div>
+
+  <figure>
+    <div class="scroll"><svg id="cosplot" viewBox="0 0 760 300" width="100%" style="min-width:520px" role="img" aria-label="Curva de correlación E contra el ángulo: coseno ideal y coseno aplastado por ruido"></svg></div>
+    <figcaption><b>E2 en una imagen.</b> La línea continua es la predicción ideal <span class="m">E(θ) = cos θ</span>. La punteada es lo que se espera con ruido: la misma forma pero más baja, multiplicada por la visibilidad <span class="m">V</span> (aquí V = 0,85 como ejemplo, no es un dato medido).</figcaption>
+  </figure>
+
+  <figure>
+    <div class="ctrl">
+      <label for="t">Tiempo de espera <input id="t" type="range" min="0" max="150" step="1" value="0"></label>
+      <label for="t2">T₂ del qubit <input id="t2" type="range" min="20" max="200" step="5" value="100"></label>
+      <span id="out" class="readout ok">S = 2,40</span>
+    </div>
+    <div class="scroll"><svg id="decay" viewBox="0 0 760 300" width="100%" style="min-width:520px" role="img" aria-label="S cae exponencialmente con el tiempo de espera y cruza el límite clásico de 2"></svg></div>
+    <figcaption><b>E3 para jugar.</b> Mueve el tiempo de espera y mira cómo cae S. Modelo: <span class="m">S(t) = S₀·e^(−t/T₂)</span> con S₀ = 2,40 (valor típico de ejemplo). Cuando la curva cruza la línea ámbar de 2, el entrelazamiento ya no se puede demostrar: el chip “se volvió clásico” para ese experimento. Cambia T₂ para ver qué pasa con un qubit mejor o peor.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="scroll">
+    <table class="t">
+      <thead><tr><th>Qubits (N)</th><th>Límite clásico de Mermin</th><th>Ideal cuántico</th><th>Ventaja ideal</th></tr></thead>
+      <tbody>
+        <tr><td>3</td><td>2</td><td>4</td><td>×2</td></tr>
+        <tr><td>4</td><td>4</td><td>8</td><td>×2</td></tr>
+        <tr><td>5</td><td>4</td><td>16</td><td>×4</td></tr>
+        <tr><td>6</td><td>8</td><td>32</td><td>×4</td></tr>
+        <tr><td>7</td><td>8</td><td>64</td><td>×8</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <figcaption><b>E4.</b> Con más qubits, la ventaja ideal de la cuántica sobre lo clásico crece. Pero cada qubit y cada compuerta extra agregan ruido, así que en la práctica la violación se pierde a partir de algún N. Encontrar ese N en el hardware de 2026 es parte de la pregunta PI3.</figcaption>
+  </figure>
+</section>
+
+<!-- 5 ESPERAMOS -->
+<section id="esperamos">
+  <span class="eyebrow">5 · Qué esperamos concluir</span>
+  <h2>Hipótesis (todavía no resultados)</h2>
+  <div class="prose"><p>Como es una propuesta, lo que tenemos son hipótesis basadas en lo que reportan los papers anteriores. El experimento dirá si se cumplen.</p></div>
+  <div class="hyp">
+    <div class="card"><b>H1</b><p>S saldrá claramente mayor que 2 pero menor que 2,83, y la diferencia se explicará sobre todo por el error de la compuerta CNOT y el error de lectura de cada par.</p></div>
+    <div class="card"><b>H2</b><p>S bajará aproximadamente como una exponencial con el tiempo de espera, con una escala parecida al T₂ que publica IBM.</p></div>
+    <div class="card"><b>H3</b><p>La violación de Mermin se mantendrá hasta un número moderado de qubits y después desaparecerá, porque el ruido crece con el tamaño del circuito.</p></div>
+    <div class="card"><b>H4</b><p>Los resultados variarán entre días y entre pares de qubits más de lo que predicen sus barras de error estadísticas (deriva).</p></div>
+  </div>
+  <div class="prose">
+    <p class="callout">El aporte final: un <b>mapa</b> de la calidad del entrelazamiento del procesador, una <b>curva</b> de cómo se pierde lo cuántico con el tiempo y un <b>procedimiento abierto</b> que otros puedan repetir para evaluar hardware cuántico. Es tomar una de las preguntas más profundas sobre la realidad y convertirla en una herramienta de ingeniería.</p>
+  </div>
+</section>
+
+<!-- 6 METAFORAS -->
+<section id="metaforas">
+  <span class="eyebrow">6 · Las metáforas, traducidas</span>
+  <h2>Qué quise decir con cada imagen</h2>
+  <div class="metaphor">
+    <div class="card"><span class="say">“A la clásica”</span><span class="means">Significa <b>realismo local</b>: las partículas ya tienen sus resultados definidos antes de medirlas (realismo) y lo que se hace en un lado no afecta instantáneamente al otro (localidad).</span><span class="tag">en el paper: realismo local</span></div>
+    <div class="card"><span class="say">“Tarjeta con instrucciones”</span><span class="means">Es una <b>variable oculta</b> λ: información que la partícula llevaría consigo y que decidiría de antemano el resultado para cada perilla. Bell probó que ninguna tarjeta así puede dar S &gt; 2.</span><span class="tag">en el paper: variable oculta λ</span></div>
+    <div class="card"><span class="say">“Perilla”</span><span class="means">La <b>base o dirección de medición</b>, un ángulo θ. En el chip se implementa con una rotación <span class="m">Ry(−θ)</span> justo antes de medir.</span><span class="tag">en el paper: θ_A, θ_B; a, a′, b, b′</span></div>
+    <div class="card"><span class="say">“Termómetro de cuanticidad”</span><span class="means">Usar el valor de <b>S</b> como medida de cuánto entrelazamiento real produce el hardware: 2,83 es perfecto, menos de 2 es indistinguible de clásico.</span><span class="tag">en el paper: S como sonda / testigo</span></div>
+    <div class="card"><span class="say">“El ruido diluye el entrelazamiento”</span><span class="means">El estado real es una mezcla: una fracción <b>V</b> del estado entrelazado ideal y el resto ruido aleatorio. Entonces <span class="m">S = V·2√2</span>, y hace falta V &gt; 0,707 para superar 2.</span><span class="tag">en el paper: ruido despolarizante, visibilidad V</span></div>
+    <div class="card"><span class="say">“Se vuelve clásico”</span><span class="means">Por <b>decoherencia</b>, el qubit pierde su relación de fase con su pareja al interactuar con el entorno; tras cierto tiempo S &lt; 2 y ya no se puede demostrar entrelazamiento.</span><span class="tag">en el paper: decoherencia, T₂</span></div>
+    <div class="card"><span class="say">“Mapa del chip”</span><span class="means">Una tabla o dibujo del procesador donde cada par de qubits conectados tiene su valor de S medido, para comparar zonas buenas y malas.</span><span class="tag">en el paper: experimento E1</span></div>
+    <div class="card"><span class="say">“El hardware deriva”</span><span class="means">Las propiedades del chip cambian con el tiempo (temperatura, recalibraciones diarias, defectos), así que el mismo circuito puede dar resultados distintos otro día.</span><span class="tag">en el paper: deriva temporal, reproducibilidad</span></div>
+    <div class="card"><span class="say">“Escapatorias”</span><span class="means">Formas en que un test de Bell podría engañarnos (por ejemplo, si los aparatos pudieran comunicarse). En un chip los qubits están a milímetros, así que no cerramos la escapatoria de localidad: no probamos la naturaleza, caracterizamos el hardware.</span><span class="tag">en el paper: loopholes</span></div>
+  </div>
+</section>
+
+<!-- 7 GLOSARIO -->
+<section id="glosario">
+  <span class="eyebrow">7 · Glosario</span>
+  <h2>Cada término y cada variable</h2>
+  <dl class="gloss">
+    <div class="grp">Ideas físicas</div>
+    <dt>Qubit</dt><dd>La unidad de información cuántica. Como un bit, puede dar 0 o 1 al medirlo, pero antes de medir puede estar en una superposición de ambos.</dd>
+    <dt>Superposición</dt><dd>Estado en el que el qubit no tiene un valor definido; al medirlo sale 0 o 1 con ciertas probabilidades.</dd>
+    <dt>Entrelazamiento</dt><dd>Dos o más qubits comparten un estado único que no se puede describir por separado. Sus resultados están correlacionados más fuerte de lo que permite cualquier explicación clásica.</dd>
+    <dt>Realismo</dt><dd>Supuesto de que las propiedades físicas tienen valores definidos aunque nadie las mida.</dd>
+    <dt>Localidad</dt><dd>Supuesto de que lo que hace Alicia no puede afectar instantáneamente el resultado de Bob (nada viaja más rápido que la luz).</dd>
+    <dt>Variable oculta <span class="m">λ</span></dt><dd>Información hipotética que llevaría la partícula y que fijaría los resultados de antemano. Es la idea de Einstein (EPR, 1935) que Bell puso a prueba.</dd>
+    <dt>Decoherencia</dt><dd>Pérdida del comportamiento cuántico porque el qubit interactúa con su entorno (calor, campos, materiales). Es la principal enemiga de las computadoras cuánticas.</dd>
+    <dt>No-señalización</dt><dd>Lo que mide Bob, mirado solo, no debe depender de qué perilla eligió Alicia. Si en los datos parece depender, es señal de un defecto del hardware (por ejemplo, interferencia entre qubits), no de comunicación real.</dd>
+    <dt>Escapatoria (loophole)</dt><dd>Defecto del montaje experimental que permitiría explicar una violación de Bell sin cuántica. Las principales son la de localidad, la de detección y la de libre elección.</dd>
+
+    <div class="grp">Variables y números</div>
+    <dt><span class="m">E(a,b)</span></dt><dd>Correlación entre los resultados de Alicia y Bob para un par de perillas. Va de −1 a +1. Se calcula como (coincidencias − no coincidencias) / total.</dd>
+    <dt><span class="m">S</span></dt><dd>Combinación CHSH de cuatro correlaciones. |S| ≤ 2 en cualquier teoría clásica local; hasta 2√2 en cuántica.</dd>
+    <dt><span class="m">2√2 ≈ 2,83</span></dt><dd>Límite de Tsirelson: el máximo que permite la mecánica cuántica para S.</dd>
+    <dt><span class="m">θ, θ_A, θ_B</span></dt><dd>Ángulos de medición (las “perillas”). Para el estado |Φ⁺⟩ ideal, E = cos(θ_A − θ_B). Los ángulos óptimos son a = 0, a′ = π/2, b = π/4, b′ = −π/4.</dd>
+    <dt><span class="m">|Φ⁺⟩</span></dt><dd>Estado de Bell (|00⟩ + |11⟩)/√2: los dos qubits siempre coinciden, pero ninguno tiene valor propio antes de medir.</dd>
+    <dt><span class="m">V</span> (visibilidad)</dt><dd>Fracción del estado que sigue siendo el entrelazado ideal (de 0 a 1). Con ruido, S = V·2√2. Hace falta V &gt; 0,707 para violar Bell.</dd>
+    <dt><span class="m">T₁</span></dt><dd>Tiempo característico en que un qubit en 1 se “cae” a 0 (pierde energía). Se mide en microsegundos (µs).</dd>
+    <dt><span class="m">T₂</span></dt><dd>Tiempo característico en que el qubit pierde su fase, es decir, su capacidad de interferir. Controla cuánto dura el entrelazamiento. IBM lo publica para cada qubit.</dd>
+    <dt><span class="m">N</span> (shots)</dt><dd>Número de veces que se repite el mismo circuito. Más shots, menor incertidumbre. Usaremos del orden de miles.</dd>
+    <dt><span class="m">σ</span></dt><dd>Incertidumbre estadística (barra de error). Para una correlación, σ_E ≈ √((1−E²)/N). Decimos que una violación es significativa si S − 2 es varias veces σ_S.</dd>
+    <dt>GHZ</dt><dd>Estado entrelazado de 3 o más qubits: (|000…⟩ + |111…⟩)/√2. Lleva el nombre de Greenberger, Horne y Zeilinger.</dd>
+    <dt><span class="m">M_N</span> (Mermin)</dt><dd>Versión de la desigualdad de Bell para N qubits en estado GHZ. Para 3 qubits: clásico ≤ 2, cuántico = 4.</dd>
+
+    <div class="grp">Herramientas y hardware</div>
+    <dt>Compuerta</dt><dd>Operación sobre qubits, como una instrucción de un programa. Cada compuerta real tiene un pequeño error.</dd>
+    <dt>Hadamard (H)</dt><dd>Compuerta que convierte un 0 en una superposición mitad 0, mitad 1.</dd>
+    <dt>CNOT</dt><dd>Compuerta de dos qubits: invierte el segundo si el primero es 1. Junto con H crea el entrelazamiento. Es la compuerta con más error en el chip.</dd>
+    <dt><span class="m">Ry(θ)</span></dt><dd>Rotación del qubit en un ángulo θ. Aplicarla antes de medir equivale a medir en otra dirección.</dd>
+    <dt>Error de lectura</dt><dd>Probabilidad de que el aparato anote 0 cuando era 1, o al revés. Se puede corregir parcialmente con una matriz de calibración (mitigación de errores).</dd>
+    <dt>Calibración</dt><dd>Datos que IBM mide y publica cada día para cada qubit: T₁, T₂, error de compuertas, error de lectura. Los usamos para predecir S y comparar.</dd>
+    <dt>Deriva</dt><dd>Cambio de esas propiedades con el tiempo. Por eso repetimos en varios días.</dd>
+    <dt>Simulador</dt><dd>Programa que calcula en una computadora normal lo que haría una cuántica. Puede ser ideal (sin ruido) o con un modelo de ruido.</dd>
+    <dt>Qiskit</dt><dd>Biblioteca de Python de IBM para escribir circuitos cuánticos y enviarlos a sus procesadores.</dd>
+    <dt>IBM Quantum</dt><dd>Plataforma en la nube que da acceso a procesadores cuánticos superconductores reales; tiene un plan gratuito con minutos limitados al mes.</dd>
+  </dl>
+</section>
+
+<footer>Guía de estudio para la propuesta “¿Qué tan cuántica es la nube?”. Las figuras de ruido y decaimiento usan valores de ejemplo para ilustrar, no datos medidos. Fuentes principales: Bell (1964), Clauser–Horne–Shimony–Holt (1969), Mermin (1990), Hensen et al. (2015), Alsina y Latorre (2016); la lista completa está en el PDF de la propuesta.</footer>
+</div>
+
+<script>
+(function(){
+  const NS="http://www.w3.org/2000/svg";
+  function el(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+
+  /* Scale 0..4 */
+  (function(){
+    const s=document.getElementById('scale'), x0=40,x1=720, y=70, X=v=>x0+(x1-x0)*v/4;
+    el('rect',{x:X(0),y:y-16,width:X(2)-X(0),height:32,fill:'var(--classic-soft)'},s);
+    el('rect',{x:X(2),y:y-16,width:X(2.828)-X(2),height:32,fill:'var(--quantum-soft)'},s);
+    el('rect',{x:X(2.828),y:y-16,width:X(4)-X(2.828),height:32,fill:'var(--impossible-soft)'},s);
+    el('text',{x:(X(0)+X(2))/2,y:y+5,'text-anchor':'middle','font-size':14,'font-weight':600,fill:'var(--classic)'},s,'clásico (realismo local)');
+    el('text',{x:(X(2)+X(2.828))/2,y:y+5,'text-anchor':'middle','font-size':14,'font-weight':600,fill:'var(--quantum)'},s,'solo cuántico');
+    el('text',{x:(X(2.828)+X(4))/2,y:y+5,'text-anchor':'middle','font-size':14,'font-weight':600,fill:'var(--impossible)'},s,'imposible');
+    [0,1,2,2.828,3,4].forEach(v=>{
+      el('line',{x1:X(v),x2:X(v),y1:y+16,y2:y+24,stroke:'var(--muted)','stroke-width':1.5},s);
+      el('text',{x:X(v),y:y+42,'text-anchor':'middle','font-size':13,'font-family':'var(--mono)',fill:'var(--fg)'},s,v===2.828?'2√2':String(v));
+    });
+    el('text',{x:X(2.828),y:y-26,'text-anchor':'middle','font-size':12,fill:'var(--muted)'},s,'chip perfecto');
+    el('text',{x:X(2),y:y-26,'text-anchor':'middle','font-size':12,fill:'var(--muted)'},s,'límite de Bell');
+    // example real chip
+    el('path',{d:`M${X(2.4)},${y+56} l-7,12 h14 z`,fill:'var(--quantum)'},s);
+    el('text',{x:X(2.4),y:y+82,'text-anchor':'middle','font-size':12,fill:'var(--muted)'},s,'chip real típico ≈ 2,3–2,6');
+    el('text',{x:x0-30,y:y+42,'font-size':13,'font-family':'var(--mono)',fill:'var(--muted)'},s,'|S|');
+  })();
+
+  /* Axes helper */
+  function axes(svg,o){
+    const {L,R,T,B,xmin,xmax,ymin,ymax}=o;
+    const X=v=>L+(R-L)*(v-xmin)/(xmax-xmin), Y=v=>B-(B-T)*(v-ymin)/(ymax-ymin);
+    o.yt.forEach(v=>{el('line',{x1:L,x2:R,y1:Y(v),y2:Y(v),stroke:'var(--line)','stroke-width':1},svg);el('text',{x:L-8,y:Y(v)+4,'text-anchor':'end','font-size':12,'font-family':'var(--mono)',fill:'var(--muted)'},svg,o.yf?o.yf(v):v);});
+    o.xt.forEach(([v,lab])=>{el('line',{x1:X(v),x2:X(v),y1:B,y2:B+5,stroke:'var(--muted)'},svg);el('text',{x:X(v),y:B+20,'text-anchor':'middle','font-size':12,'font-family':'var(--mono)',fill:'var(--muted)'},svg,lab);});
+    el('line',{x1:L,x2:R,y1:B,y2:B,stroke:'var(--muted)','stroke-width':1.2},svg);
+    el('text',{x:(L+R)/2,y:B+40,'text-anchor':'middle','font-size':13,fill:'var(--fg)'},svg,o.xl);
+    el('text',{x:14,y:(T+B)/2,'text-anchor':'middle','font-size':13,fill:'var(--fg)',transform:`rotate(-90 14 ${(T+B)/2})`},svg,o.yl);
+    return {X,Y};
+  }
+
+  /* cos plot */
+  (function(){
+    const s=document.getElementById('cosplot');
+    const o={L:70,R:610,T:20,B:240,xmin:0,xmax:2*Math.PI,ymin:-1,ymax:1,yt:[-1,-0.5,0,0.5,1],xt:[[0,'0'],[Math.PI/2,'π/2'],[Math.PI,'π'],[1.5*Math.PI,'3π/2'],[2*Math.PI,'2π']],xl:'diferencia de ángulos θ_A − θ_B',yl:'correlación E',yf:v=>String(v).replace('.',',')};
+    const {X,Y}=axes(s,o);
+    let d1='',d2='';for(let i=0;i<=120;i++){const t=2*Math.PI*i/120;d1+=(i?'L':'M')+X(t).toFixed(1)+','+Y(Math.cos(t)).toFixed(1);d2+=(i?'L':'M')+X(t).toFixed(1)+','+Y(0.85*Math.cos(t)).toFixed(1);}
+    el('path',{d:d1,fill:'none',stroke:'var(--quantum)','stroke-width':2.5},s);
+    el('path',{d:d2,fill:'none',stroke:'var(--classic)','stroke-width':2,'stroke-dasharray':'6 5'},s);
+    el('line',{x1:630,x2:660,y1:70,y2:70,stroke:'var(--quantum)','stroke-width':2.5},s);
+    el('text',{x:666,y:74,'font-size':13,fill:'var(--fg)'},s,'ideal');
+    el('line',{x1:630,x2:660,y1:98,y2:98,stroke:'var(--classic)','stroke-width':2,'stroke-dasharray':'6 5'},s);
+    el('text',{x:666,y:102,'font-size':13,fill:'var(--fg)'},s,'con ruido');
+    el('text',{x:666,y:118,'font-size':12,fill:'var(--muted)'},s,'(V = 0,85)');
+  })();
+
+  /* decay plot */
+  const ds=document.getElementById('decay'), tIn=document.getElementById('t'), t2In=document.getElementById('t2'), out=document.getElementById('out');
+  const o={L:70,R:690,T:20,B:240,xmin:0,xmax:150,ymin:0,ymax:3,yt:[0,1,2,3],xt:[[0,'0'],[25,'25'],[50,'50'],[75,'75'],[100,'100'],[125,'125'],[150,'150']],xl:'tiempo de espera antes de medir (µs)',yl:'S'};
+  const fixed=document.createElementNS(NS,'g'), dyn=document.createElementNS(NS,'g'); ds.appendChild(fixed); ds.appendChild(dyn);
+  const {X,Y}=axes(fixed,o);
+  el('line',{x1:o.L,x2:o.R,y1:Y(2),y2:Y(2),stroke:'var(--classic)','stroke-width':2},fixed);
+  el('text',{x:o.R-4,y:Y(2)-8,'text-anchor':'end','font-size':12.5,fill:'var(--classic)'},fixed,'límite clásico S = 2');
+  el('line',{x1:o.L,x2:o.R,y1:Y(2.828),y2:Y(2.828),stroke:'var(--quantum)','stroke-width':1,'stroke-dasharray':'3 4'},fixed);
+  el('text',{x:o.R-4,y:Y(2.828)-6,'text-anchor':'end','font-size':12,fill:'var(--muted)'},fixed,'2√2');
+  const S0=2.40;
+  function fmt(v){return v.toFixed(2).replace('.',',');}
+  function draw(){
+    const t=+tIn.value, T2=+t2In.value; dyn.textContent='';
+    let d='';for(let i=0;i<=150;i++){d+=(i?'L':'M')+X(i).toFixed(1)+','+Y(S0*Math.exp(-i/T2)).toFixed(1);}
+    el('path',{d,fill:'none',stroke:'var(--quantum)','stroke-width':2.5},dyn);
+    const tc=T2*Math.log(S0/2);
+    if(tc<=150){el('line',{x1:X(tc),x2:X(tc),y1:Y(2),y2:o.B,stroke:'var(--muted)','stroke-dasharray':'3 3'},dyn);el('text',{x:X(tc)+6,y:o.B-8,'font-size':12,fill:'var(--muted)'},dyn,'cruza 2 en ≈ '+Math.round(tc)+' µs');}
+    const S=S0*Math.exp(-t/T2);
+    el('circle',{cx:X(t),cy:Y(S),r:6,fill:S>2?'var(--quantum)':'var(--classic)',stroke:'var(--surface)','stroke-width':2},dyn);
+    out.textContent='t = '+t+' µs · S = '+fmt(S)+(S>2?' · aún cuántico':' · ya no se distingue de clásico');
+    out.className='readout '+(S>2?'ok':'no');
+  }
+  tIn.addEventListener('input',draw); t2In.addEventListener('input',draw); draw();
+})();
+</script>
+
+</body></html>
